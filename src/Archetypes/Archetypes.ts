@@ -20,5 +20,3 @@ export default abstract class Archetypes {
     throw Error('Not implemented');
   }
 }
-
-// private static _countOfInstances = 0;
