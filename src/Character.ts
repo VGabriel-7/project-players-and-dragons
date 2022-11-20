@@ -14,17 +14,19 @@ export default class Character implements Fighter {
   private _dexterity: number;
   private _energy: Energy;
   private _name: string;
+  private _random: number;
 
   constructor(name:string) {
+    this._random = getRandomInt(1, 10);
     this._name = name;
-    this._dexterity = getRandomInt(1, 10);
+    this._dexterity = this._random;
     this._race = new Elf(name, this._dexterity);
     this._archetype = new Mage(name);
     this._maxLigePoints = this._dexterity / 2;
     this._lifePoints = this._dexterity;
-    this._strength = getRandomInt(1, 10);
-    this._defense = getRandomInt(1, 10);
-    this._energy = { type_: 'mana', amount: getRandomInt(1, 10) };
+    this._strength = this._random;
+    this._defense = this._random;
+    this._energy = { type_: 'mana', amount: this._random };
   }
 
   get race(): Race { return this._race; }
@@ -36,19 +38,6 @@ export default class Character implements Fighter {
   get energy(): Energy { return { ...this._energy }; }
   get name(): string { return this._name; }
 
-  levelUp(): void {
-    const increment = getRandomInt(1, 10);
-    this._maxLigePoints += increment;
-    if (this._maxLigePoints > this._race.maxLifePoints) {
-      this._maxLigePoints = this._race.maxLifePoints;
-    }
-    this._strength += increment;
-    this._dexterity += increment;
-    this._defense += increment;
-    this._energy.amount = 10;
-    this._lifePoints = this._maxLigePoints;
-  }
-
   receiveDamage(attackPoints: number): number {
     const damage = attackPoints - this._defense;
     if (damage > 0) {
@@ -58,6 +47,19 @@ export default class Character implements Fighter {
     if (this._lifePoints <= 0) { this._lifePoints = -1; }
 
     return this._lifePoints;
+  }
+  
+  levelUp(): void {
+    const increment = this._random;
+    this._strength += increment;
+    this._dexterity += increment;
+    this._defense += increment;
+    this._energy.amount = 10;
+    this._maxLigePoints += increment;
+    if (this._maxLigePoints > this._race.maxLifePoints) {
+      this._maxLigePoints = this._race.maxLifePoints;
+    }
+    this._lifePoints = this._maxLigePoints;
   }
 
   attack(enemy: Fighter): void {
