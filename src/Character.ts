@@ -7,7 +7,7 @@ import getRandomInt from './utils';
 export default class Character implements Fighter {
   private _race: Race;
   private _archetype: Archetypes;
-  private _maxLigePoints: number;
+  private _maxLifePoints: number;
   private _lifePoints: number;
   private _strength: number;
   private _defense: number;
@@ -22,8 +22,8 @@ export default class Character implements Fighter {
     this._dexterity = this._random;
     this._race = new Elf(name, this._dexterity);
     this._archetype = new Mage(name);
-    this._maxLigePoints = this._dexterity / 2;
-    this._lifePoints = this._dexterity;
+    this._maxLifePoints = this._race.maxLifePoints / 2;
+    this._lifePoints = this._maxLifePoints;
     this._strength = this._random;
     this._defense = this._random;
     this._energy = { type_: 'mana', amount: this._random };
@@ -55,11 +55,11 @@ export default class Character implements Fighter {
     this._dexterity += increment;
     this._defense += increment;
     this._energy.amount = 10;
-    this._maxLigePoints += increment;
-    if (this._maxLigePoints > this._race.maxLifePoints) {
-      this._maxLigePoints = this._race.maxLifePoints;
+    this._maxLifePoints += increment;
+    if (this._maxLifePoints > this._race.maxLifePoints) {
+      this._maxLifePoints = this._race.maxLifePoints;
     }
-    this._lifePoints = this._maxLigePoints;
+    this._lifePoints = this._maxLifePoints;
   }
 
   attack(enemy: SimpleFighter): void {

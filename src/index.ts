@@ -7,9 +7,7 @@ const player1 = new Character('Player1');
 const player2 = new Character('Player2');
 const player3 = new Character('Player3');
 
-console.log(player1.lifePoints);
 for (let i = 0; i < 10; i += 1) player1.levelUp();
-console.log(player1.lifePoints);
 
 const monster1 = new Monster();
 const monster2 = new Dragon();
